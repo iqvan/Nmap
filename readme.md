@@ -7,6 +7,12 @@ Security, Owasp top 10, Cron. (#nmap, #samba, #suid, #pathvarmanipulation #smb )
 - [Introducción](#Introducción).
 - [Nmap Switches](#Nmap-Switches).
 - [Tipos de escaneo - Descripción general](#Tipos-de-escaneo---Descripción-general).
+- [Escaneos de TCP Connect](#Escaneos-de-TCP-Connect).
+- [Escaneos SYN Scans](#Escaneos-SYN-Scans).
+- [Escaneos UDP Scans](#Escaneos-UDP-Scans).
+- [ICMP Network Scanning](#ICMP-Network-Scanning).
+- [Overview](#Overview).
+- [Trabajar con NSE](#Trabajar-con-NSE).
 
 
 --------------------------------
@@ -60,6 +66,10 @@ nmap -oG
 Habilitar el modo "agresivo"
 ```
 nmap -A
+```
+Escaneo omitiendo el ping
+```
+nmap -Pn
 ```
 Cronometraje en el nivel 5
 ```
@@ -117,6 +127,9 @@ nmap --script=vuln
 ### Escaneos de TCP Connect
 -------------------------------
 
+
+[![](https://www.open.edu/openlearncreate/pluginfile.php/258370/mod_oucontent/oucontent/35227/9b0bce6c/594a9486/cn_black_fig3.jpg)](#)
+
  ```
  Client          Server
   | ------SYN-----> |
@@ -144,7 +157,7 @@ Si un puerto está cerrado, ¿qué bandera debe enviar el servidor para indicar 
 RST
 ```
 --------------------------------
-### Escaneos SYN Scans (Half-open,stealth)
+### Escaneos SYN Scans
 -------------------------------
 
  ```
@@ -244,6 +257,8 @@ Concatenar múltiples scripts:
 Ejemplo de un script con argumentos:
 ```
 nmap -p 80 --script http-put --script-args http-put.url='/dav/shell.php',http-put.file='./shell.php'
+nmap --script ftp-proftpd-backdoor -p 21 <ip_address>
+nmap --script http-title 10.10.56.150
 ```
 
 Ayuda para saber más de los scripts:
@@ -252,5 +267,7 @@ nmap --script-help <script-name>
 ```
 
 Link de referencia:
+
 https://nmap.org/nsedoc/
 
+https://nmap.org/nsedoc/scripts/
