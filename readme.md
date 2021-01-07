@@ -271,3 +271,55 @@ Link de referencia:
 https://nmap.org/nsedoc/
 
 https://nmap.org/nsedoc/scripts/
+
+--------------------------------
+### Buscando Scripts
+-------------------------------
+
+Los Scripts se almacenan en: 
+```
+/usr/share/nmap/scripts
+```
+Si queremos buscar un scrit con un nombre de archivo específico:
+```
+grep "ftp" /usr/share/nmap/scripts/script.db
+```
+
+Otra manera de obtenerlo es:
+```
+ls -l /usr/share/nmap/scripts/*ftp*
+```
+Si queremos buscar un scrit por la categoría también se puede utilizar:
+```
+grep "safe" /usr/share/nmap/scripts/script.db
+```
+
+Para instalar los scripts:
+```
+sudo apt update && sudo apt install nmap
+```
+Para descargarlos manualmente:
+```
+sudo wget -O /usr/share/nmap/scripts/<script-name>.nse https://svn.nmap.org/nmap/scripts/<script-name>.nse
+```
+
+Para actualizar la bd:
+```
+nmap --script-updatedb
+```
+
+--------------------------------
+### Firewall Evasión
+-------------------------------
+
+Los siguientes interruptores son de particular interés:
+
+* -f: - Se usa para fragmentar los paquetes (es decir, dividirlos en partes más pequeñas), lo que hace menos probable que los paquetes sean detectados por un firewall o IDS.
+Una alternativa a -f, pero que proporciona más control sobre el tamaño de los paquetes: --mtu <number>acepta un tamaño máximo de unidad de transmisión para usar en los paquetes enviados. Este debe ser un múltiplo de 8.
+
+* --scan-delay <time>ms: - utilizado para agregar un retraso entre los paquetes enviados. Esto es muy útil si la red es inestable, pero también para evadir cualquier cortafuegos / disparador IDS basado en el tiempo que pueda estar en su lugar.
+
+* --badsum: - esto se usa para generar una suma de comprobación no válida para paquetes. Cualquier pila de TCP / IP real eliminaría este paquete, sin embargo, los firewalls pueden responder automáticamente, sin molestarse en verificar la suma de verificación del paquete. Como tal, este conmutador se puede utilizar para determinar la presencia de un firewall / IDS.
+
+
+
